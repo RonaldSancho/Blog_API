@@ -65,7 +65,6 @@ app.post("/posts", (req, res) =>{
   res.json(NewPost);
 })
 
-//CHALLENGE 4: PATCH a post when you just want to update one parameter
 app.patch("/posts/:id", (req, res) => {
   const id = parseInt(req.params.id);
   const post = posts.find((jokes) => jokes.id == id);
@@ -78,7 +77,18 @@ app.patch("/posts/:id", (req, res) => {
   res.json(post);
 });
 
-//CHALLENGE 5: DELETE a specific post by providing the post id.
+app.delete("/posts/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const SearchIndex = posts.findIndex((jokes) => jokes.id == id); 
+  if (SearchIndex > -1) {
+    posts.splice(SearchIndex, 1);
+    res.sendStatus(200);
+  }else{
+    res.status(404)
+    .json({ error: `Joke with id: ${id} not found. No jokes were deleted.` });
+  }
+})
+
 
 app.listen(port, () => {
   console.log(`API is running at http://localhost:${port}`);
