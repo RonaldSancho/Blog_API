@@ -51,6 +51,24 @@ app.get("/posts/:id", (req, res) => {
   res.json(post);
 })
 
+app.post("/posts", (req, res) =>{
+  const newId = lastId += 1;
+  const NewPost = {
+    id: newId,
+    title: req.body.title,
+    content: req.body.content,
+    author: req.body.author,
+    date: new Date(),
+  };
+  lastId = newId;
+  posts.push(NewPost);
+  res.json(NewPost);
+})
+
+//CHALLENGE 4: PATCH a post when you just want to update one parameter
+
+
+//CHALLENGE 5: DELETE a specific post by providing the post id.
 
 app.listen(port, () => {
   console.log(`API is running at http://localhost:${port}`);
